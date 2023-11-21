@@ -59,13 +59,13 @@ body:
     attributes:
       label: Custom Resources
       description: Are you using custom resources? Which ones?
-      placeholder: e.g. zdiscord, qb-target
+      placeholder: e.g. zdiscord, slk-target
     validations:
       required: true
   - type: input
     id: renamed
     attributes:
       label: Resource Rename
-      description: Have you renamed this resource from `qb-` to something custom?
+      description: Have you renamed this resource from `slk-` to something custom?
     validations:
       required: true

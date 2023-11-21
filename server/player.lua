@@ -24,7 +24,7 @@ function QBCore.Player.Login(source, citizenid, newData)
                 QBCore.Player.CheckPlayerData(source, PlayerData)
             else
                 DropPlayer(source, Lang:t("info.exploit_dropped"))
-                TriggerEvent('qb-log:server:CreateLog', 'anticheat', 'Anti-Cheat', 'white', GetPlayerName(source) .. ' Has Been Dropped For Character Joining Exploit', false)
+                TriggerEvent('slk-log:server:CreateLog', 'anticheat', 'Anti-Cheat', 'white', GetPlayerName(source) .. ' Has Been Dropped For Character Joining Exploit', false)
             end
         else
             QBCore.Player.CheckPlayerData(source, newData)
@@ -180,7 +180,7 @@ function QBCore.Player.CheckPlayerData(source, PlayerData)
     PlayerData.gang.grade.level = PlayerData.gang.grade.level or 0
     -- Other
     PlayerData.position = PlayerData.position or QBConfig.DefaultSpawn
-    PlayerData.items = GetResourceState('qb-inventory') ~= 'missing' and exports['qb-inventory']:LoadInventory(PlayerData.source, PlayerData.citizenid) or {}
+    PlayerData.items = GetResourceState('slk-inventory') ~= 'missing' and exports['slk-inventory']:LoadInventory(PlayerData.source, PlayerData.citizenid) or {}
     return QBCore.Player.CreatePlayer(PlayerData, Offline)
 end
 
@@ -323,9 +323,9 @@ function QBCore.Player.CreatePlayer(PlayerData, Offline)
         if not self.Offline then
             self.Functions.UpdatePlayerData()
             if amount > 100000 then
-                TriggerEvent('qb-log:server:CreateLog', 'playermoney', 'AddMoney', 'lightgreen', '**' .. GetPlayerName(self.PlayerData.source) .. ' (citizenid: ' .. self.PlayerData.citizenid .. ' | id: ' .. self.PlayerData.source .. ')** $' .. amount .. ' (' .. moneytype .. ') added, new ' .. moneytype .. ' balance: ' .. self.PlayerData.money[moneytype] .. ' reason: ' .. reason, true)
+                TriggerEvent('slk-log:server:CreateLog', 'playermoney', 'AddMoney', 'lightgreen', '**' .. GetPlayerName(self.PlayerData.source) .. ' (citizenid: ' .. self.PlayerData.citizenid .. ' | id: ' .. self.PlayerData.source .. ')** $' .. amount .. ' (' .. moneytype .. ') added, new ' .. moneytype .. ' balance: ' .. self.PlayerData.money[moneytype] .. ' reason: ' .. reason, true)
             else
-                TriggerEvent('qb-log:server:CreateLog', 'playermoney', 'AddMoney', 'lightgreen', '**' .. GetPlayerName(self.PlayerData.source) .. ' (citizenid: ' .. self.PlayerData.citizenid .. ' | id: ' .. self.PlayerData.source .. ')** $' .. amount .. ' (' .. moneytype .. ') added, new ' .. moneytype .. ' balance: ' .. self.PlayerData.money[moneytype] .. ' reason: ' .. reason)
+                TriggerEvent('slk-log:server:CreateLog', 'playermoney', 'AddMoney', 'lightgreen', '**' .. GetPlayerName(self.PlayerData.source) .. ' (citizenid: ' .. self.PlayerData.citizenid .. ' | id: ' .. self.PlayerData.source .. ')** $' .. amount .. ' (' .. moneytype .. ') added, new ' .. moneytype .. ' balance: ' .. self.PlayerData.money[moneytype] .. ' reason: ' .. reason)
             end
             TriggerClientEvent('hud:client:OnMoneyChange', self.PlayerData.source, moneytype, amount, false)
             TriggerClientEvent('QBCore:Client:OnMoneyChange', self.PlayerData.source, moneytype, amount, "add", reason)
@@ -353,13 +353,13 @@ function QBCore.Player.CreatePlayer(PlayerData, Offline)
         if not self.Offline then
             self.Functions.UpdatePlayerData()
             if amount > 100000 then
-                TriggerEvent('qb-log:server:CreateLog', 'playermoney', 'RemoveMoney', 'red', '**' .. GetPlayerName(self.PlayerData.source) .. ' (citizenid: ' .. self.PlayerData.citizenid .. ' | id: ' .. self.PlayerData.source .. ')** $' .. amount .. ' (' .. moneytype .. ') removed, new ' .. moneytype .. ' balance: ' .. self.PlayerData.money[moneytype] .. ' reason: ' .. reason, true)
+                TriggerEvent('slk-log:server:CreateLog', 'playermoney', 'RemoveMoney', 'red', '**' .. GetPlayerName(self.PlayerData.source) .. ' (citizenid: ' .. self.PlayerData.citizenid .. ' | id: ' .. self.PlayerData.source .. ')** $' .. amount .. ' (' .. moneytype .. ') removed, new ' .. moneytype .. ' balance: ' .. self.PlayerData.money[moneytype] .. ' reason: ' .. reason, true)
             else
-                TriggerEvent('qb-log:server:CreateLog', 'playermoney', 'RemoveMoney', 'red', '**' .. GetPlayerName(self.PlayerData.source) .. ' (citizenid: ' .. self.PlayerData.citizenid .. ' | id: ' .. self.PlayerData.source .. ')** $' .. amount .. ' (' .. moneytype .. ') removed, new ' .. moneytype .. ' balance: ' .. self.PlayerData.money[moneytype] .. ' reason: ' .. reason)
+                TriggerEvent('slk-log:server:CreateLog', 'playermoney', 'RemoveMoney', 'red', '**' .. GetPlayerName(self.PlayerData.source) .. ' (citizenid: ' .. self.PlayerData.citizenid .. ' | id: ' .. self.PlayerData.source .. ')** $' .. amount .. ' (' .. moneytype .. ') removed, new ' .. moneytype .. ' balance: ' .. self.PlayerData.money[moneytype] .. ' reason: ' .. reason)
             end
             TriggerClientEvent('hud:client:OnMoneyChange', self.PlayerData.source, moneytype, amount, true)
             if moneytype == 'bank' then
-                TriggerClientEvent('qb-phone:client:RemoveBankMoney', self.PlayerData.source, amount)
+                TriggerClientEvent('slk-phone:client:RemoveBankMoney', self.PlayerData.source, amount)
             end
             TriggerClientEvent('QBCore:Client:OnMoneyChange', self.PlayerData.source, moneytype, amount, "remove", reason)
             TriggerEvent('QBCore:Server:OnMoneyChange', self.PlayerData.source, moneytype, amount, "remove", reason)
@@ -379,7 +379,7 @@ function QBCore.Player.CreatePlayer(PlayerData, Offline)
 
         if not self.Offline then
             self.Functions.UpdatePlayerData()
-            TriggerEvent('qb-log:server:CreateLog', 'playermoney', 'SetMoney', 'green', '**' .. GetPlayerName(self.PlayerData.source) .. ' (citizenid: ' .. self.PlayerData.citizenid .. ' | id: ' .. self.PlayerData.source .. ')** $' .. amount .. ' (' .. moneytype .. ') set, new ' .. moneytype .. ' balance: ' .. self.PlayerData.money[moneytype] .. ' reason: ' .. reason)
+            TriggerEvent('slk-log:server:CreateLog', 'playermoney', 'SetMoney', 'green', '**' .. GetPlayerName(self.PlayerData.source) .. ' (citizenid: ' .. self.PlayerData.citizenid .. ' | id: ' .. self.PlayerData.source .. ')** $' .. amount .. ' (' .. moneytype .. ') set, new ' .. moneytype .. ' balance: ' .. self.PlayerData.money[moneytype] .. ' reason: ' .. reason)
             TriggerClientEvent('hud:client:OnMoneyChange', self.PlayerData.source, moneytype, math.abs(difference), difference < 0)
             TriggerClientEvent('QBCore:Client:OnMoneyChange', self.PlayerData.source, moneytype, amount, "set", reason)
             TriggerEvent('QBCore:Server:OnMoneyChange', self.PlayerData.source, moneytype, amount, "set", reason)
@@ -401,7 +401,7 @@ function QBCore.Player.CreatePlayer(PlayerData, Offline)
 
     function self.Functions.GetCardSlot(cardNumber, cardType)
         local item = tostring(cardType):lower()
-        local slots = exports['qb-inventory']:GetSlotsByItem(self.PlayerData.items, item)
+        local slots = exports['slk-inventory']:GetSlotsByItem(self.PlayerData.items, item)
         for _, slot in pairs(slots) do
             if slot then
                 if self.PlayerData.items[slot].info.cardNumber == cardNumber then
@@ -520,7 +520,7 @@ function QBCore.Player.Save(source)
             position = json.encode(pcoords),
             metadata = json.encode(PlayerData.metadata)
         })
-        if GetResourceState('qb-inventory') ~= 'missing' then exports['qb-inventory']:SaveInventory(source) end
+        if GetResourceState('slk-inventory') ~= 'missing' then exports['slk-inventory']:SaveInventory(source) end
         QBCore.ShowSuccess(GetCurrentResourceName(), PlayerData.name .. ' PLAYER SAVED!')
     else
         QBCore.ShowError(GetCurrentResourceName(), 'ERROR QBCORE.PLAYER.SAVE - PLAYERDATA IS EMPTY!')
@@ -541,7 +541,7 @@ function QBCore.Player.SaveOffline(PlayerData)
             position = json.encode(PlayerData.position),
             metadata = json.encode(PlayerData.metadata)
         })
-        if GetResourceState('qb-inventory') ~= 'missing' then exports['qb-inventory']:SaveInventory(PlayerData, true) end
+        if GetResourceState('slk-inventory') ~= 'missing' then exports['slk-inventory']:SaveInventory(PlayerData, true) end
         QBCore.ShowSuccess(GetCurrentResourceName(), PlayerData.name .. ' OFFLINE PLAYER SAVED!')
     else
         QBCore.ShowError(GetCurrentResourceName(), 'ERROR QBCORE.PLAYER.SAVEOFFLINE - PLAYERDATA IS EMPTY!')
@@ -580,12 +580,12 @@ function QBCore.Player.DeleteCharacter(source, citizenid)
 
         MySQL.transaction(queries, function(result2)
             if result2 then
-                TriggerEvent('qb-log:server:CreateLog', 'joinleave', 'Character Deleted', 'red', '**' .. GetPlayerName(source) .. '** ' .. license .. ' deleted **' .. citizenid .. '**..')
+                TriggerEvent('slk-log:server:CreateLog', 'joinleave', 'Character Deleted', 'red', '**' .. GetPlayerName(source) .. '** ' .. license .. ' deleted **' .. citizenid .. '**..')
             end
         end)
     else
         DropPlayer(source, Lang:t("info.exploit_dropped"))
-        TriggerEvent('qb-log:server:CreateLog', 'anticheat', 'Anti-Cheat', 'white', GetPlayerName(source) .. ' Has Been Dropped For Character Deletion Exploit', true)
+        TriggerEvent('slk-log:server:CreateLog', 'anticheat', 'Anti-Cheat', 'white', GetPlayerName(source) .. ' Has Been Dropped For Character Deletion Exploit', true)
     end
 end
 
@@ -607,7 +607,7 @@ function QBCore.Player.ForceDeleteCharacter(citizenid)
 
         MySQL.transaction(queries, function(result2)
             if result2 then
-                TriggerEvent('qb-log:server:CreateLog', 'joinleave', 'Character Force Deleted', 'red', 'Character **' .. citizenid .. '** got deleted')
+                TriggerEvent('slk-log:server:CreateLog', 'joinleave', 'Character Force Deleted', 'red', 'Character **' .. citizenid .. '** got deleted')
             end
         end)
     end
@@ -616,28 +616,28 @@ end
 -- Inventory Backwards Compatibility
 
 function QBCore.Player.SaveInventory(source)
-    if GetResourceState('qb-inventory') == 'missing' then return end
-    exports['qb-inventory']:SaveInventory(source, false)
+    if GetResourceState('slk-inventory') == 'missing' then return end
+    exports['slk-inventory']:SaveInventory(source, false)
 end
 
 function QBCore.Player.SaveOfflineInventory(PlayerData)
-    if GetResourceState('qb-inventory') == 'missing' then return end
-    exports['qb-inventory']:SaveInventory(PlayerData, true)
+    if GetResourceState('slk-inventory') == 'missing' then return end
+    exports['slk-inventory']:SaveInventory(PlayerData, true)
 end
 
 function QBCore.Player.GetTotalWeight(items)
-    if GetResourceState('qb-inventory') == 'missing' then return end
-    return exports['qb-inventory']:GetTotalWeight(items)
+    if GetResourceState('slk-inventory') == 'missing' then return end
+    return exports['slk-inventory']:GetTotalWeight(items)
 end
 
 function QBCore.Player.GetSlotsByItem(items, itemName)
-    if GetResourceState('qb-inventory') == 'missing' then return end
-    return exports['qb-inventory']:GetSlotsByItem(items, itemName)
+    if GetResourceState('slk-inventory') == 'missing' then return end
+    return exports['slk-inventory']:GetSlotsByItem(items, itemName)
 end
 
 function QBCore.Player.GetFirstSlotByItem(items, itemName)
-    if GetResourceState('qb-inventory') == 'missing' then return end
-    return exports['qb-inventory']:GetFirstSlotByItem(items, itemName)
+    if GetResourceState('slk-inventory') == 'missing' then return end
+    return exports['slk-inventory']:GetFirstSlotByItem(items, itemName)
 end
 
 -- Util Functions
@@ -701,7 +701,7 @@ function QBCore.Player.CreateWalletId()
     local UniqueFound = false
     local WalletId = nil
     while not UniqueFound do
-        WalletId = 'QB-' .. math.random(11111111, 99999999)
+        WalletId = 'slk-' .. math.random(11111111, 99999999)
         local query = '%' .. WalletId .. '%'
         local result = MySQL.prepare.await('SELECT COUNT(*) as count FROM players WHERE metadata LIKE ?', { query })
         if result == 0 then

@@ -318,13 +318,13 @@ function PaycheckInterval()
                 if not payment then payment = Player.PlayerData.job.payment end
                 if Player.PlayerData.job and payment > 0 and (QBShared.Jobs[Player.PlayerData.job.name].offDutyPay or Player.PlayerData.job.onduty) then
                     if QBCore.Config.Money.PayCheckSociety then
-                        local account = exports['qb-management']:GetAccount(Player.PlayerData.job.name)
+                        local account = exports['slk-management']:GetAccount(Player.PlayerData.job.name)
                         if account ~= 0 then -- Checks if player is employed by a society
                             if account < payment then -- Checks if company has enough money to pay society
                                 TriggerClientEvent('QBCore:Notify', Player.PlayerData.source, Lang:t('error.company_too_poor'), 'error')
                             else
                                 Player.Functions.AddMoney('bank', payment, 'paycheck')
-                                exports['qb-management']:RemoveMoney(Player.PlayerData.job.name, payment)
+                                exports['slk-management']:RemoveMoney(Player.PlayerData.job.name, payment)
                                 TriggerClientEvent('QBCore:Notify', Player.PlayerData.source, Lang:t('info.received_paycheck', {value = payment}))
                             end
                         else
@@ -391,8 +391,8 @@ end
 ---@param source any
 ---@param item string
 function QBCore.Functions.UseItem(source, item)
-    if GetResourceState('qb-inventory') == 'missing' then return end
-    exports['qb-inventory']:UseItem(source, item)
+    if GetResourceState('slk-inventory') == 'missing' then return end
+    exports['slk-inventory']:UseItem(source, item)
 end
 
 ---Kick Player
@@ -564,8 +564,8 @@ end
 ---@param amount number
 ---@return boolean
 function QBCore.Functions.HasItem(source, items, amount)
-    if GetResourceState('qb-inventory') == 'missing' then return end
-    return exports['qb-inventory']:HasItem(source, items, amount)
+    if GetResourceState('slk-inventory') == 'missing' then return end
+    return exports['slk-inventory']:HasItem(source, items, amount)
 end
 
 ---Notify
@@ -588,7 +588,7 @@ function QBCore.Functions.PrepForSQL(source, data, pattern)
     local player = QBCore.Functions.GetPlayer(src)
     local result = string.match(data, pattern)
     if not result or string.len(result) ~= string.len(data)  then
-        TriggerEvent('qb-log:server:CreateLog', 'anticheat', 'SQL Exploit Attempted', 'red', string.format('%s attempted to exploit SQL!', player.PlayerData.license))
+        TriggerEvent('slk-log:server:CreateLog', 'anticheat', 'SQL Exploit Attempted', 'red', string.format('%s attempted to exploit SQL!', player.PlayerData.license))
         return false
     end
     return true

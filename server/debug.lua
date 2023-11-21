@@ -32,7 +32,7 @@ RegisterServerEvent('QBCore:DebugSomething', function(tbl, indent, resource)
 end)
 
 function QBCore.Debug(tbl, indent)
-    TriggerEvent('QBCore:DebugSomething', tbl, indent, GetInvokingResource() or "qb-core")
+    TriggerEvent('QBCore:DebugSomething', tbl, indent, GetInvokingResource() or "slk-core")
 end
 
 function QBCore.ShowError(resource, msg)

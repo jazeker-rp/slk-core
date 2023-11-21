@@ -1,7 +1,7 @@
 fx_version 'cerulean'
 game 'gta5'
 
-description 'QB-Core'
+description 'slk-core'
 version '1.2.6'
 
 shared_scripts {
@@ -49,3 +49,5 @@ files {
 dependency 'oxmysql'
 
 lua54 'yes'
+
+provide 'slk-core'
